@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+  <title>Station 2 – Auswahl oder Zufall?</title>
+  <style>
+    html {
+      font-size: 16px;
+    }
+    body {
+      font-family: 'Courier New', monospace;
+      background: url('station2-bg.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #2a1b0d;
+      margin: 0;
+      padding: 1rem;
+      line-height: 1.6;
+    }
+    .container {
+      width: 100%;
+      max-width: 720px;
+      margin: auto;
+      background-color: rgba(255, 255, 240, 0.95);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      border: 3px double #5b4636;
+    }
+    h1 {
+      color: #3d2f1e;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: bold;
+      text-shadow: 1px 1px 0 #fff;
+    }
+    .image-container {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 3px solid #3d2f1e;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .frage {
+      margin-bottom: 1.8rem;
+      padding: 1rem;
+      border-left: 4px solid #7e5c3d;
+      background-color: #fffdf6;
+      border-radius: 8px;
+    }
+    p {
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      background-color: #3d2f1e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #5b4636;
+    }
+    #resultat {
+      margin-top: 1.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      color: #2a1b0d;
+    }
+    @media screen and (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+      button {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Station 2
+    </h1>
+    <div class="image-container">
+      <img src="station2.png" alt="Illustration zur Aufgabe" />
+    </div>
+    <form id="quizForm">
+      <div class="frage">
+        <p><strong>1. Welcher Algorithmus ist gemeint?</strong></p>
+        <label><input type="radio" name="frage1" value="bubblesort"> Bubblesort</label>
+        <label><input type="radio" name="frage1" value="selectionsort"> Selectionsort</label>
+        <label><input type="radio" name="frage1" value="insertionsort"> Insertionsort</label>
+        <label><input type="radio" name="frage1" value="mergesort"> Mergesort</label>
+      </div>
+      <div class="frage">
+        <p><strong>2. Wie arbeitet dieser Algorithmus beim Sortieren?</strong></p>
+        <label><input type="radio" name="frage2" value="nachbarn"> Er tauscht immer benachbarte Elemente</label>
+        <label><input type="radio" name="frage2" value="kleinste"> Er sucht in jedem Durchgang das kleinste Element und setzt es an die richtige Stelle</label>
+        <label><input type="radio" name="frage2" value="rekursiv"> Er vergleicht rekursiv die Hälften</label>
+        <label><input type="radio" name="frage2" value="einfuegen"> Er fügt jedes neue Element an der richtigen Stelle ein</label>
+      </div>
+      <div class="frage">
+        <p><strong>3. Was trifft bei dem gesuchten Sortieralgorithmus bei zwei verschiedenen Arrays der gleichen Länge zu?</strong></p>
+        <label><input type="radio" name="frage3" value="immer_weniger"> Selectionsort braucht immer weniger Vergleiche als Insertionsort</label>
+        <label><input type="radio" name="frage3" value="immer_gleich"> Selectionsort führt gleich viele Vergleiche durch – unabhängig von der Reihenfolge der Elemente</label>
+        <label><input type="radio" name="frage3" value="gleich_viele"> Insertionsort braucht immer gleich viele Vergleiche wie Selectionsort</label>
+      </div>
+      <button type="button" onclick="auswerten()">Zweite Codeziffer generieren</button>
+    </form>
+    <div id="resultat"></div>
+  </div>
 
+  <script>
+    function auswerten() {
+      const frage1 = document.querySelector('input[name="frage1"]:checked')?.value;
+      const frage2 = document.querySelector('input[name="frage2"]:checked')?.value;
+      const frage3 = document.querySelector('input[name="frage3"]:checked')?.value;
+
+      if (!frage1 || !frage2 || !frage3) {
+        document.getElementById('resultat').innerText = 'Bitte alle Fragen beantworten!';
+        return;
+      }
+
+      let ziffer;
+
+      if (frage1 === 'selectionsort' && frage2 === 'kleinste' && frage3 === 'immer_gleich') {
+        ziffer = 4;
+      } else {
+        const kombicode = frage1[0] + frage2[0] + frage3[0];
+        ziffer = (kombicode.charCodeAt(0) + kombicode.charCodeAt(1) + kombicode.charCodeAt(2)) % 10;
+        if (ziffer === 4) ziffer = 9;
+      }
+
+      document.getElementById('resultat').innerText = `Deine zweite Ziffer fürs Kryptex ist: ${ziffer}`;
+    }
+  </script>
+</body>
+</html>
