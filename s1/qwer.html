@@ -3,44 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Station 1</title>
+  <title>Station 1 – Codeziffer</title>
   <style>
-    html, body {
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      height: 100vh;
       background-color: #efeae0;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
-    .inhalt {
+    .container {
       max-width: 90%;
-      padding: 20px;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      color: #333;
-      margin-bottom: 1rem;
     }
 
     img {
       max-width: 100%;
       height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1em;
+      border: 2px solid #333;
+    }
+
+    input[type="number"] {
+      padding: 0.5em;
+      font-size: 1.2em;
+      width: 60px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 0.7em;
+      padding: 0.5em 1em;
+      font-size: 1.1em;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 1em;
+      font-weight: bold;
+      font-size: 1.3em;
     }
   </style>
 </head>
 <body>
-  <div class="inhalt">
+  <div class="container">
     <h1>Station 1 – Erste Codeziffer des Kryptex</h1>
-    <img src="station1.png" alt="Aufgabe Station 1" />
+    <img src="station1.png" alt="Sortierszene" />
+
+    <p><strong>Frage:</strong> Wie viele der Zahlen waren zu Beginn bereits an der richtigen Position?</p>
+    <input type="number" id="antwort" min="0" max="4" />
+    <button onclick="pruefeAntwort()">Antwort prüfen</button>
+
+    <div id="ergebnis" class="result"></div>
   </div>
+
+  <script>
+    function pruefeAntwort() {
+      const input = document.getElementById('antwort').value;
+      const resultDiv = document.getElementById('ergebnis');
+
+      if (input === "1") {
+        const codeZiffer = (6 - 1) % 5; // ergibt 0 bis 4 → 5 ergibt 0
+        const finalCode = codeZiffer === 0 ? 4 : codeZiffer; // 0 wird zu 4 (wie besprochen)
+        resultDiv.innerHTML = `✅ Richtig! Die erste Codeziffer lautet: <strong>${finalCode}</strong>`;
+      } else if (input === "") {
+        resultDiv.innerHTML = "Bitte gib eine Zahl ein.";
+      } else {
+        resultDiv.innerHTML = "❌ Leider falsch – versuch es nochmal!";
+      }
+    }
+  </script>
 </body>
 </html>
