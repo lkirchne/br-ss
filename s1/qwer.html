@@ -67,7 +67,7 @@
     <img src="station1.png" alt="Sortierszene" />
 
     <p><strong>Wieviele Vergleiche wurden bei der Sortierung durchgeführt?</strong></p>
-    <input type="number" id="tausch" min="0" max="10" placeholder="z. B. 6" />
+    <input type="number" id="vergleich" min="0" max="10" placeholder="z. B. 6" />
 
     <p><strong>Wie viele Zahlen standen schon am Anfang richtig sortiert?</strong></p>
     <input type="number" id="korrekt" min="0" max="4" placeholder="z. B. 1" />
@@ -75,24 +75,22 @@
     <div id="ergebnis" class="result"></div>
     
     <button onclick="berechneZiffer()">Codeziffer prüfen</button>
-
-    
   </div>
 
   <script>
     function berechneZiffer() {
-      const vergleich = parseInt(document.getElementById('tausch').value);
+      const vergleich = parseInt(document.getElementById('vergleich').value);
       const korrekt = parseInt(document.getElementById('korrekt').value);
       const resultDiv = document.getElementById('ergebnis');
 
-      if (isNaN(tausch) || isNaN(korrekt)) {
+      if (isNaN(vergleich) || isNaN(korrekt)) {
         resultDiv.innerHTML = "❗ Bitte beide Felder korrekt ausfüllen.";
         return;
       }
-       const code = vergleich - korrekt;
 
+      const code = vergleich - korrekt;
 
-      if (vergleich === 6 && korrekt === 1 && code === 5)
+      if (vergleich === 6 && korrekt === 1 && code === 5) {
         resultDiv.innerHTML = `✅ Super kombiniert! Die erste Codeziffer des Kryptex lautet: <strong>4</strong>`;
       } else {
         resultDiv.innerHTML = `❌ Hmm… das scheint nicht zu stimmen. Versuche es nochmal.`;
