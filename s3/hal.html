@@ -1,1 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Station 3 – Suche mit Verstand</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: url('station3.png') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 2rem;
+      color: #2b2b2b;
+    }
 
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 750px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #3a1c05;
+      text-align: center;
+    }
+
+    .intro {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      background-color: #fff7e6;
+      padding: 1rem;
+      border-left: 4px solid #ff6600;
+      border-radius: 6px;
+    }
+
+    .frage {
+      margin-bottom: 1.8rem;
+      background: #f3f3f3;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #ff6600;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #e65500;
+    }
+
+    #resultat {
+      margin-top: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Station 4 – Suche mit Verstand 🔍</h1>
+
+    <div class="intro">
+      <p><strong>Professor Bit</strong> hat zwei Such-Protokolle in seinem Log gefunden. Beide betreffen dieselbe Liste – aber unterschiedliche Zielzahlen!</p>
+      <p>Die Protokolle enthalten Fehler… doch mit eurer Logik könnt ihr die richtige Anzahl an Vergleichen herausfinden – und damit eine geheime Ziffer entschlüsseln!</p>
+    </div>
+
+    <form id="quizForm">
+      <div class="frage">
+        <p><strong>1. Wie viele Vergleiche braucht die lineare Suche im schlechtesten Fall bei einer sortierten Liste mit 64 Elementen?</strong></p>
+        <label><input type="radio" name="frage1" value="64"> 64</label>
+        <label><input type="radio" name="frage1" value="63"> 63</label>
+        <label><input type="radio" name="frage1" value="32"> 32</label>
+        <label><input type="radio" name="frage1" value="8"> 8</label>
+      </div>
+
+      <div class="frage">
+        <p><strong>2. Wie viele Schritte benötigt die binäre Suche im schlechtesten Fall?</strong></p>
+        <label><input type="radio" name="frage2" value="6"> 6</label>
+        <label><input type="radio" name="frage2" value="7"> 7</label>
+        <label><input type="radio" name="frage2" value="8"> 8</label>
+        <label><input type="radio" name="frage2" value="9"> 9</label>
+        <label><input type="radio" name="frage2" value="10"> 10</label>
+        <label><input type="radio" name="frage2" value="11"> 11</label>
+      </div>
+
+      <div class="frage">
+        <p><strong>3. Welche Aussage ist korrekt?</strong><br><br>In einer Liste mit nur 3 Elementen wird die Zahl 2 gesucht.<br><br>Die Liste ist: [ 2 | 7 | 12]</p>
+        <label><input type="radio" name="frage3" value="a"> Binäre Suche findet die Zahl schneller</label>
+        <label><input type="radio" name="frage3" value="b"> Lineare Suche braucht weniger Schritte</label>
+        <label><input type="radio" name="frage3" value="c"> Beide brauchen gleich viele Schritte</label>
+        <label><input type="radio" name="frage3" value="d"> Lineare Suche kann nur auf unsortierten Listen verwendet werden</label>
+      </div>
+
+      <button type="button" onclick="auswerten()">Codeziffer entschlüsseln</button>
+    </form>
+
+    <div id="resultat"></div>
+  </div>
+
+  <script>
+    function auswerten() {
+      const f1 = document.querySelector('input[name="frage1"]:checked')?.value;
+      const f2 = document.querySelector('input[name="frage2"]:checked')?.value;
+      const f3 = document.querySelector('input[name="frage3"]:checked')?.value;
+
+      if (!f1 || !f2 || !f3) {
+        document.getElementById('resultat').innerText = "❗ Bitte alle Fragen beantworten.";
+        return;
+      }
+
+      if (f1 === "64" && (f2 === "8" || f2 === "9") && f3 === "b") {
+        document.getElementById('resultat').innerText = "✅ Gut kombiniert! Die vierte Codeziffer lautet: 3";
+      } else {
+        const code = (f1.charCodeAt(0) + f2.charCodeAt(0) + f3.charCodeAt(0)) % 10;
+        document.getElementById('resultat').innerText = `🔐 Hmm… das scheint nicht ganz richtig. Deine Ziffer lautet: ${code}`;
+      }
+    }
+  </script>
+</body>
+</html>
