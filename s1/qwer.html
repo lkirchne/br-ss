@@ -72,9 +72,11 @@
     <p><strong>Wie viele Zahlen standen schon am Anfang richtig sortiert?</strong></p>
     <input type="number" id="korrekt" min="0" max="4" placeholder="z. B. 1" />
 
+    <div id="ergebnis" class="result"></div>
+    
     <button onclick="berechneZiffer()">Codeziffer prüfen</button>
 
-    <div id="ergebnis" class="result"></div>
+    
   </div>
 
   <script>
@@ -87,8 +89,10 @@
         resultDiv.innerHTML = "❗ Bitte beide Felder korrekt ausfüllen.";
         return;
       }
+       const code = vergleich - korrekt;
 
-      if (vergleich === 6 && korrekt === 1) {
+
+      if (vergleich === 6 && korrekt === 1 && code === 5)
         resultDiv.innerHTML = `✅ Super kombiniert! Die erste Codeziffer des Kryptex lautet: <strong>4</strong>`;
       } else {
         resultDiv.innerHTML = `❌ Hmm… das scheint nicht zu stimmen. Versuche es nochmal.`;
