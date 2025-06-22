@@ -34,6 +34,7 @@
       font-size: 1.2em;
       width: 60px;
       text-align: center;
+      margin: 0.3em;
     }
 
     button {
@@ -52,6 +53,12 @@
       font-weight: bold;
       font-size: 1.3em;
     }
+
+    .info {
+      font-size: 0.9em;
+      color: #444;
+      margin-top: 1em;
+    }
   </style>
 </head>
 <body>
@@ -59,26 +66,38 @@
     <h1>Station 1 – Erste Codeziffer des Kryptex</h1>
     <img src="station1.png" alt="Sortierszene" />
 
-    <p><strong>Frage:</strong> Wie viele der Zahlen waren zu Beginn bereits an der richtigen Position?</p>
-    <input type="number" id="antwort" min="0" max="4" />
-    <button onclick="pruefeAntwort()">Antwort prüfen</button>
+    <p><strong>Wieviele Tauschvorgänge wurden bei der Sortierung durchgeführt?</strong></p>
+    <input type="number" id="tausch" min="0" max="10" placeholder="z. B. 6" />
+
+    <p><strong>Wie viele Zahlen standen schon am Anfang richtig?</strong></p>
+    <input type="number" id="korrekt" min="0" max="4" placeholder="z. B. 1" />
+
+    <button onclick="berechneZiffer()">Codeziffer prüfen</button>
 
     <div id="ergebnis" class="result"></div>
+
+    <div class="info">
+      <p>🔍 Formel: <br><code>Codeziffer = Tauschvorgänge – korrekt stehende Zahlen</code></p>
+    </div>
   </div>
 
   <script>
-    function pruefeAntwort() {
-      const input = document.getElementById('antwort').value;
+    function berechneZiffer() {
+      const tausch = parseInt(document.getElementById('tausch').value);
+      const korrekt = parseInt(document.getElementById('korrekt').value);
       const resultDiv = document.getElementById('ergebnis');
 
-      if (input === "1") {
-        const codeZiffer = (6 - 1) % 5; // ergibt 0 bis 4 → 5 ergibt 0
-        const finalCode = codeZiffer === 0 ? 4 : codeZiffer; // 0 wird zu 4 (wie besprochen)
-        resultDiv.innerHTML = `✅ Richtig! Die erste Codeziffer lautet: <strong>${finalCode}</strong>`;
-      } else if (input === "") {
-        resultDiv.innerHTML = "Bitte gib eine Zahl ein.";
+      if (isNaN(tausch) || isNaN(korrekt)) {
+        resultDiv.innerHTML = "❗ Bitte beide Felder korrekt ausfüllen.";
+        return;
+      }
+
+      const code = tausch - korrekt;
+
+      if (tausch === 6 && korrekt === 1 && code === 5) {
+        resultDiv.innerHTML = `✅ Super kombiniert! Die erste Codeziffer lautet: <strong>4</strong>`;
       } else {
-        resultDiv.innerHTML = "❌ Leider falsch – versuch es nochmal!";
+        resultDiv.innerHTML = `❌ Hmm… das scheint nicht zu stimmen. Versuche es nochmal.`;
       }
     }
   </script>
