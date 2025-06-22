@@ -1,1 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Station 5 – Sortierstrategien im Vergleich</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fcf9f2;
+      color: #333;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
 
+    h1 {
+      text-align: center;
+      color: #472e1e;
+    }
+
+    .info {
+      background-color: #fff1dc;
+      padding: 1rem;
+      border-left: 4px solid #ff6600;
+      margin-bottom: 2rem;
+      border-radius: 6px;
+    }
+
+    .frage {
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.5rem 0;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+
+    button {
+      display: block;
+      margin: 2rem auto 1rem auto;
+      padding: 0.7rem 2rem;
+      font-size: 1.1rem;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #cc5200;
+    }
+
+    #resultat {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+    }
+
+    .tipp {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      margin: 2rem auto;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Station 5 – Sortierstrategien im Vergleich</h1>
+    <img src="station5.png" alt="Sortierverlauf mit Bubblesort" />
+  <div class="info">
+Professor Bit hat euch in eine seiner geheimen algorithmischen Testkammern geführt – die Vergleichskammer. Hier wird nicht nur sortiert – hier wird analysiert, wer es am cleversten macht!
+<br>
+<br>
+<strong>Eure Aufgabe:</strong>
+Der Professor hat die Ergebnisse mehrerer Sortierversuche dokumentiert. Doch nur eine Kombination von Aussagen stimmt mit seinen Daten überein! Wählt weise – denn nur wenn ihr die effizienteste Strategie erkennt, öffnet sich das nächste Sicherheitstor!</p>
+  </div>
+
+  <form id="quizForm">
+    <div class="frage">
+      <p><strong>1. Welche Strategie ist effizienter bei bereits sortierten Daten? (ohne Wissen aus Station 6)</strong></p>
+      <label><input type="radio" name="frage1" value="a"> Selectionsort</label>
+      <label><input type="radio" name="frage1" value="b"> Insertionsort</label>
+      <label><input type="radio" name="frage1" value="c"> Bubblesort</label>
+    </div>
+
+    <div class="frage">
+      <p><strong>2. Bei zufälligen Daten ohne erkennbare Ordnung:</strong></p>
+      <label><input type="radio" name="frage2" value="a"> Insertionsort ist immer am besten</label>
+      <label><input type="radio" name="frage2" value="b"> Bubblesort braucht tendenziell mehr Vergleiche</label>
+      <label><input type="radio" name="frage2" value="c"> Selectionsort braucht immer am wenigsten Vergleiche</label>
+    </div>
+
+    <div class="frage">
+      <p><strong>3. Was trifft bei umgekehrt sortierten Daten (absteigend) am ehesten zu?</strong></p>
+      <label><input type="radio" name="frage3" value="a"> Insertionsort braucht viele Vergleiche</label>
+      <label><input type="radio" name="frage3" value="b"> Selectionsort passt sich automatisch an</label>
+      <label><input type="radio" name="frage3" value="c"> Bubblesort ist optimal</label>
+    </div>
+
+    <button type="button" onclick="auswerten(this)">Fünfte Codeziffer anzeigen</button>
+    <div id="resultat"></div>
+  </form>
+
+  <div class="tipp">
+    Tipp: Denkt an die Anzahl der Schleifendurchläufe und die Vergleichsstrategie!
+  </div>
+
+<script>
+  // Einmalige falsche Zahl generieren
+  let falscheZahl;
+  do {
+    falscheZahl = Math.floor(Math.random() * 9) + 1;
+  } while (falscheZahl === 3);
+
+  function auswerten(button) {
+    const f1 = document.querySelector('input[name="frage1"]:checked')?.value;
+    const f2 = document.querySelector('input[name="frage2"]:checked')?.value;
+    const f3 = document.querySelector('input[name="frage3"]:checked')?.value;
+    const res = document.getElementById('resultat');
+
+    if (!f1 || !f2 || !f3) {
+      res.innerText = "❗ Bitte alle Fragen beantworten!";
+      return;
+    }
+
+    // Auswertung
+    if (f1 === 'b' && f2 === 'b' && f3 === 'a') {
+      res.innerHTML = `Ungeprüft: Die Ziffer lautet <strong>3</strong>`;
+    } else {
+      let ziffer;
+      do {
+        ziffer = Math.floor(Math.random() * 9) + 1;
+      } while (ziffer === 3);
+
+      res.innerHTML = `Ungeprüft: Die Ziffer lautet <strong>${ziffer}</strong>`;
+    }
+
+    // Button deaktivieren und Countdown starten
+    let countdown = 10;
+    button.disabled = true;
+    const originalText = button.innerText;
+    button.innerText = `Warte ${countdown}s...`;
+
+    const interval = setInterval(() => {
+      countdown--;
+      if (countdown > 0) {
+        button.innerText = `Warte ${countdown}s...`;
+      } else {
+        clearInterval(interval);
+        button.innerText = originalText;
+        button.disabled = false;
+      }
+    }, 1000);
+  }
+</script>
+</body>
+</html>
