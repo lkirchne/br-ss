@@ -66,7 +66,7 @@
     <h1>Station 1 – Erste Codeziffer des Kryptex</h1>
     <img src="station1.png" alt="Sortierszene" />
 
-    <p><strong>Wieviele Tauschvorgänge wurden bei der Sortierung durchgeführt?</strong></p>
+    <p><strong>Wieviele Vergleiche wurden bei der Sortierung durchgeführt?</strong></p>
     <input type="number" id="tausch" min="0" max="10" placeholder="z. B. 6" />
 
     <p><strong>Wie viele Zahlen standen schon am Anfang richtig?</strong></p>
@@ -75,15 +75,11 @@
     <button onclick="berechneZiffer()">Codeziffer prüfen</button>
 
     <div id="ergebnis" class="result"></div>
-
-    <div class="info">
-      <p>🔍 Formel: <br><code>Codeziffer = Tauschvorgänge – korrekt stehende Zahlen</code></p>
-    </div>
   </div>
 
   <script>
     function berechneZiffer() {
-      const tausch = parseInt(document.getElementById('tausch').value);
+      const vergleich = parseInt(document.getElementById('tausch').value);
       const korrekt = parseInt(document.getElementById('korrekt').value);
       const resultDiv = document.getElementById('ergebnis');
 
@@ -92,9 +88,7 @@
         return;
       }
 
-      const code = tausch - korrekt;
-
-      if (tausch === 6 && korrekt === 1 && code === 5) {
+      if (vergleich === 6 && korrekt === 1) {
         resultDiv.innerHTML = `✅ Super kombiniert! Die erste Codeziffer lautet: <strong>4</strong>`;
       } else {
         resultDiv.innerHTML = `❌ Hmm… das scheint nicht zu stimmen. Versuche es nochmal.`;
