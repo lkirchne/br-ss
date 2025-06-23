@@ -135,7 +135,7 @@
       }
 
       if (f1 === "64" && (f2 === "8" || f2 === "9") && f3 === "b") {
-        document.getElementById('resultat').innerText = "✅ Gut kombiniert! Die vierte Codeziffer lautet: 3";
+        document.getElementById('resultat').innerText = "✅ Gut kombiniert! Die dritte Codeziffer lautet: 3";
       } else {
         const code = (f1.charCodeAt(0) + f2.charCodeAt(0) + f3.charCodeAt(0)) % 10;
         document.getElementById('resultat').innerText = `🔐 Hmm… das scheint nicht ganz richtig. Deine Ziffer lautet: ${code}`;
